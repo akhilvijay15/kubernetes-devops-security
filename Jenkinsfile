@@ -23,10 +23,17 @@ pipeline {
 
     stage('Docker Build and Push') {
       steps {
-        withDockerRegistry([credentialsId: "docker-hub", url: ""]) {
-          sh 'printenv'
-          sh 'docker build -t siddharth67/numeric-app:""$GIT_COMMIT"" .'
-          sh 'docker push akhilvijay15/cicdproject:""$GIT_COMMIT""'
+         
+                sh 'docker build -t siddharth67/numeric-app:""$GIT_COMMIT"" .'
+            }
+            
+        }
+        stage('Push'){
+            steps{
+                 withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'dockerHubUser', passwordVariable: 'dockerHubPassword')]) {
+          
+          sh "docker login -u ${env.dockerHUbuser} -p ${env.dockerHubpassword}"
+          sh 'docker push akhilvijay15/numeric-app:tagname''
 
         }
       }
