@@ -26,8 +26,8 @@ pipeline {
         withDockerRegistry([credentialsId: "docker-hub", url: ""]) {
           sh 'printenv'
           sh 'docker build -t siddharth67/numeric-app:""$GIT_COMMIT"" .'
-          sh 'docker push akhilvijay15/numeric15:latest''
-'
+          sh 'docker push akhilvijay15/numeric15:latest'
+
         }
       }
     }
